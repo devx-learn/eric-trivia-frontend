@@ -48,7 +48,7 @@ class App extends Component {
                     </div>
 
                     <Route path='/games' render={(props) => {
-                        <GamePage username={username} {...props}/>
+                        return <GamePage username={username} {...props}/>
                     }} />
                     <Route path='/signup' render={(props) => {
                         return <SignUp onSubmit={createNewUser} />

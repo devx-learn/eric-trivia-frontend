@@ -114,12 +114,12 @@ class TriviaQuestions extends Component {
   }
 
   renderPlayerList() {
-    let playerList = this.state.playerList.map(player =>{
+    let playerList = this.state.playerList.map(player => {
       let playerElement =
-      <div className = 'playerElement'>
-      <div className = 'playerUserName'>{player.username}</div>
-      <div className = 'playerScore'>{player.score}</div>
-      </div>
+        <div className='playerElement'>
+          <div className='playerUserName'>{player.username}</div>
+          <div className='playerScore'>{player.score}</div>
+        </div>
       return playerElement;
     })
     return playerList;
@@ -130,76 +130,51 @@ class TriviaQuestions extends Component {
     let categoryImage = categoryImages[currentQuestion.category]
 
     let answers = currentQuestion.answers;
-    const {
-      score
-    } = this.state
-    let questionBlock = <
-      div >
-      <
-      div > Waiting
-    for question < /div> </div >
+    const { score } = this.state
+    let questionBlock = <div >
+      <div > WaitinG for question </div>
+    </div >
 
 
-      if (this.state.question.question && this.state.question.answers) {
+    if (this.state.question.question && this.state.question.answers) {
+      questionBlock =
+
+        <div >
+          <h3 className="question" > Score: {score} </h3>
+          <p className={currentQuestion.category}>{currentQuestion.category} </p >
+          <p className="question" > {decodeEntities(currentQuestion.question)} </p>
+          {answers.map((a) => {
+            return <Button key={a}
+              bsStyle="primary"
+              onClick={this.answerClick.bind(this, a)}> {decodeEntities(a)} </Button>
+          })}
+        </div>
+
+    } else if (this.state.answerStatus === 'right') {
+      questionBlock =
+        <div>
+          <p> Youre right!! </p>
+        </div >
+    } else
+      if (this.state.answerStatus === 'wrong') {
         questionBlock =
-
-          <
-          div >
-          <
-          h3 className = "question" > Score: {
-            score
-          } < /h3> <p className = {currentQuestion.category}>{currentQuestion.category} </p >
-          <
-          p className = "question" > {
-            decodeEntities(currentQuestion.question)
-          } < /p> {
-        answers.map((a) => {
-          return <Button key = {
-            a
-          }
-          bsStyle = "primary"
-          onClick = {
-            this.answerClick.bind(this, a)
-          } > {
-            decodeEntities(a)
-          } < /Button>
-        })
-      } <
-      /div>
-  } else if (this.state.answerStatus === 'right') {
-    questionBlock = <
-      div >
-      <
-      p > Youre right!! < /p> < /
-    div >
-  } else
-  if (this.state.answerStatus === 'wrong') {
-    questionBlock = <
-      div >
-      <
-      p > Sorry, the correct answer is "{this.state.correctAnswer}" < /p> < /
-    div >
-  } else if (this.state.timeout) {
-    questionBlock = <
-      div >
-      <
-      p > Sorry, time is up. < /p> < /
-    div >
-
+          <div>
+            <p> Sorry, the correct answer is "{this.state.correctAnswer}" </p>
+          </div >
+      } else if (this.state.timeout) {
+        questionBlock =
+          <div >
+            <p> Sorry, time is up.</p>
+          </div>
+      }
+    return (<div>
+      <div className='scoreBoard'>{this.renderPlayerList()}</div>
+      <img id="background"
+        src={categoryImage}
+        alt="category" />
+      <h1 > Welcome to Trivia! </h1> {questionBlock} </div >
+    )
   }
-  return ( <
-    div >
-    <div className = 'scoreBoard'>{this.renderPlayerList()}</div>
-    <
-    img id = "background"
-    src = {
-      categoryImage
-    }
-    alt = "category" / >
-    <
-    h1 > Welcome to Trivia! < /h1> {questionBlock} </div >
-  )
-}
 }
 
 export default TriviaQuestions
