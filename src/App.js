@@ -19,7 +19,7 @@ class App extends Component {
     }
 
     newUserSubmit() {
-
+console.log()
     }
 
     handleNewUser = (user) => {
