@@ -84,11 +84,13 @@ class SignUp extends Component {
         const { firstName, lastName, email, password } = form
 
         return (
-            <form style={{marginLeft: 200}}>
+          
+            <form>
+            <div id="form-bg">
                 <Row>
                     <Col xs={6}>
                         {errors &&
-                            <Alert bsStyle="danger">
+                            <Alert bsStyle="danger" id="alert-check-again">
                                 Please check the form and try again.
                             </Alert>
                         }
@@ -96,6 +98,7 @@ class SignUp extends Component {
                 </Row>
 
             <div className='forms'>
+              <h3>Sign-Up</h3>
                  <Row>
                    <Col xs={6}>
                    <FormGroup
@@ -172,17 +175,17 @@ class SignUp extends Component {
                    </Col>
                  </Row>
 
-                </div>
+                
 
                  <Row>
                    <Col xs={6}>
-                     <Button
-                         id="submit"
-                         onClick={this.handleSubmit.bind(this)}
-                     >Create a Trivia Account!</Button>
+                     <Button id="submit" onClick={this.handleSubmit.bind(this)}> 
+                      Create a Trivia Account! 
+                     </Button>
                    </Col>
                  </Row>
-
+                 </div>
+                 </div>
                </form>
         );
     }

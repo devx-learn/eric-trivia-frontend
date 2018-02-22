@@ -1,40 +1,39 @@
 import React, {
   Component
 } from "react"
-import {
-  Button
-} from "react-bootstrap"
 import "../App.css"
 import io from "socket.io-client";
 
 const categoryImages = {
   "Animals": "./images/Animals.jpg",
   "General Knowledge": "./images/general-knowledge.jpg",
-  "Entertainment: Books": "./images/books.jpg",
+  "Entertainment: Books": "./images/library.jpg",
   "Entertainment: Film": "./images/Entertainment-film.jpg",
-  "Entertainment: Music": "./images/music.jpg",
+  "Entertainment: Music": "./images/mic.jpg",
   "Entertainment: Television": "./images/entertainment-television.jpg",
-  "Entertainment: Video Games": "./images/entertainment-video-games.jpg",
+  "Entertainment: Video Games": "./images/pubg.jpg",
   "Entertainment: Board Games": "./images/entertainment-board-games.jpg",
   "Science & Nature": "./images/science-nature.jpg",
-  "Science: Computers": "./images/science-computers.jpg",
-  "Science: Mathematics": "./images/science-math.jpg",
-  "Mythology": "./images/mythology.jpg",
-  "Sports": "./images/sports.jpg",
-  "Geography": "./images/geography.png",
+  "Science: Computers": "./images/computerchip.jpg",
+  "Science: Mathematics": "./images/maths.jpg",
+  "Mythology": "./images/greek.jpg",
+  "Sports": "./images/stadium.jpg",
+  "Geography": "./images/flatEarth.png",
   "History": "./images/history.jpg",
-  "Politics": "./images/politics.jpg",
+  "Politics": "./images/washington-dc.jpg",
   "Art": "./images/art.jpg",
-  "Celebrities": "./images/background.jpg",
-  "Vehicles": "./images/cars.jpg",
-  "Entertainment: Comics": "./images/comic-book.jpg",
+  "Celebrities": "./images/hollywood.jpg",
+  "Vehicles": "./images/cbackToFut.jpg",
+  "Entertainment: Comics": "./images/deadPool.png",
   "Science: Gadgets": "./images/Gadgets.jpg",
-  "Entertainment: Japanese Anime & Manga": "./images/Japanese-Anime.png",
-  "Entertainment: Cartoon & Animations": "./images/animation.jpg",
-  "Entertainment: Musicals & Theatres": "./images/animation.jpg"
+  "Entertainment: Japanese Anime & Manga": "./images/goku.jpg",
+  "Entertainment: Cartoon & Animations": "./images/cartoons.jpg",
+  "Entertainment: Musicals & Theatres": "./images/theatre.jpg"
 }
 
-
+const waitingImg = {
+  "Celebrities": "./images/hollywood.jpg"
+}
 
 
 class TriviaQuestions extends Component {
@@ -131,48 +130,54 @@ class TriviaQuestions extends Component {
 
     let answers = currentQuestion.answers;
     const { score } = this.state
-    let questionBlock = <div >
-      <div > WaitinG for question </div>
-    </div >
+    let questionBlock = 
+    <div>
+      <div id="waiting"> Waiting for question </div>
+    </div>
 
 
-    if (this.state.question.question && this.state.question.answers) {
-      questionBlock =
-
-        <div >
-          <h3 className="question" > Score: {score} </h3>
-          <p className={currentQuestion.category}>{currentQuestion.category} </p >
-          <p className="question" > {decodeEntities(currentQuestion.question)} </p>
-          {answers.map((a) => {
-            return <Button key={a}
-              bsStyle="primary"
-              onClick={this.answerClick.bind(this, a)}> {decodeEntities(a)} </Button>
-          })}
-        </div>
+      if (this.state.question.question && this.state.question.answers) {
+        questionBlock =
+          <div>
+            <div className = 'scoreBoard'>{this.renderPlayerList()}</div>
+              <h3 className= 'score'> Score: {score} </h3>
+              <p className = 'category'>{currentQuestion.category} </p>
+              <p className = 'question'> {decodeEntities(currentQuestion.question)} </p>
+            <div className="answer-container">
+              {answers.map((a) => {
+              return <div className="answer-button" key = {a} onClick = {this.answerClick.bind(this, a)}> {decodeEntities(a)} </div>
+            })}
+          </div>
+      </div>
 
     } else if (this.state.answerStatus === 'right') {
       questionBlock =
         <div>
-          <p> Youre right!! </p>
-        </div >
+          <div className = 'scoreBoard'>{this.renderPlayerList()}</div>
+              <h3 className= 'score'> Score: {score} </h3>
+              <p className = 'category'>{currentQuestion.category} </p>
+              <p className = 'question'> You are Right!</p>
+        </div>
     } else
       if (this.state.answerStatus === 'wrong') {
         questionBlock =
           <div>
-            <p> Sorry, the correct answer is "{this.state.correctAnswer}" </p>
-          </div >
+            <div className = 'scoreBoard'>{this.renderPlayerList()}</div>
+              <h3 className= 'score'> Score: {score} </h3>
+              <p className = 'category'>{currentQuestion.category} </p>
+              <p className = 'question'> You are Wrong! the correct answer is "{this.state.correctAnswer}"</p>
+          </div>
       } else if (this.state.timeout) {
         questionBlock =
           <div >
             <p> Sorry, time is up.</p>
           </div>
       }
-    return (<div>
-      <div className='scoreBoard'>{this.renderPlayerList()}</div>
-      <img id="background"
-        src={categoryImage}
-        alt="category" />
-      <h1 > Welcome to Trivia! </h1> {questionBlock} </div >
+    return (
+      <div>
+        <img id="background" src={categoryImage} alt="category" />
+        <h1 className="welcome"> Welcome to Trivia!</h1> {questionBlock} 
+      </div>
     )
   }
 }

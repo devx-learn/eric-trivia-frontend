@@ -27,8 +27,9 @@
 }
 
 #background {
+  background-image: url('/images/purpleSpace.jpg');
   position: fixed;
-  background-size: contain;
+  background-size: 100%;
   height: 100vh;
   width: 100vw;
   z-index: -1;
@@ -132,7 +133,7 @@
 #logInbtn:hover {
   background-color: #1f3e5a;
   border-color: #1f3e5a;
-  color: white;
+  color: #fff;
   transition-duration: 1s;
 }
 
@@ -142,9 +143,10 @@
 }
 
 #form-bg {
-  background: url("/images/stars.jpg");
-  height: 100vh;
-  width: 100vw;
+    background: url("/images/stars.jpg");
+    background-attachment: fixed;
+    height: 135vh;
+    width: 100vw;
 }
 
 .answer-container {
@@ -182,7 +184,7 @@
   border: 5px solid #1f3e5a;
   border-radius: 50px;
   background-color: #281c3c;
-  height: 560px;
+  height: 645px;
   width: 330px;
   padding: 55px;
   color: #ffffff;
@@ -192,6 +194,7 @@
 
 .forms h3 {
   padding-bottom: 10px;
+  text-align: center;
 }
 
 #submit {
@@ -206,7 +209,7 @@
 #submit:hover {
   background-color: #1f3e5a;
   border-color: #1f3e5a;
-  color: white;
+  color: #fff;
   transition-duration: 1s;
 }
 
@@ -239,19 +242,15 @@
   text-align: center;
 }
 
-.masterWaiting {
-  display: flex;
-  justify-content: center;
-  min-width: 400px;
-  max-width: 850px;
-  margin: 20px auto;
-}
-
 #waiting {
   text-align: center;
-  border: 5px solid #dbe0e7;
-  background-color: #dbe0e7;
+  color: #dbe0e7;
   padding: 10px 30px;
   height: 200px;
   font-size: 80px;
+  opacity: 0.4;
+}
+
+#alert-check-again {
+  margin: 0 auto;
 }
