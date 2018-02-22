@@ -13,30 +13,54 @@ class App extends Component {
 
         this.state = {
             username: "Bob User",
-            user: [],
+            users: [],
             newUserSuccess: false,
             errors: null,
         }
     }
 
-    newUserSubmit() {
-
-    }
-
     handleNewUser = (user) => {
         createNewUser(user)
         .then((res) => {
-            const { user, errors } = res
+            const { users, errors } = res
 
             this.setState({
-                user: user,
                 newUserSuccess: res.errors ? false : true,
+                users: users,
                 errors: errors
             })
         })
         .catch(e => console.log("error creating user:", e))
     }
 
+    login(form) {
+        const { users } = this.state
+
+        return login(form)
+        .then((res) => {
+            const { user, errors } = res
+
+            if(errors) {
+                this.setState({
+                    errors: errors
+                })
+
+                return res
+            }
+
+            console.log("got user from login", user)
+
+            users.push(user)
+
+            this.setState({
+                users: users,
+                errors: null,
+                isLoggedIn: true
+            })
+
+            return res
+        })
+    }
 
     render() {
         const { username } = this.state
@@ -45,9 +69,9 @@ class App extends Component {
             <Router>
                 <div className="header">
                     <div id="landingPage">
-                        <Route exact path='/' component={LandingPage} render={(props) => {
-                            return <SignIn onSubmit={handleExistingUser} />
-                    }} />
+                        <Route exact path='/' render={(props) => {
+                            return <LandingPage onSubmit={this.login.bind(this)} />
+                        }} />
                     </div>
 
                     <Route path='/games' render={(props) => {
@@ -77,18 +101,33 @@ function createNewUser(user) {
     .then((raw) => raw.json())
 }
 
-function handleExistingUser(user) {
-    console.log("user logged in as:", user)
+function login(form) {
+    const { email, password } = form
 
-    return fetch(`${API}/users`, {
+    return fetch(`${API}/login`, {
         method: "POST",
         headers: {
-            'Content-Type': 'application/json'
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify(user),
+        body:JSON.stringify({
+            email: email,
+            password: password
+        })
     })
-    .then((raw) => raw.json())
+    .then(raw => raw.json())
+    .then(res => {
+        const { user } = res
+
+        if(user) {
+            localStorage.setItem('authToken', user.authToken)
+        }
+
+        return res
+    })
 }
 
+function logout() {
+    localStorage.removeItem('authToken')
+}
 
 export default App;

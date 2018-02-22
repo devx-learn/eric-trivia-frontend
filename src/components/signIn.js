@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+
 import { Link } from "react-router-dom";
+
 import {
     Button,
     Col,
@@ -8,12 +10,13 @@ import {
     FormControl,
     Row,
     HelpBlock,
-    Alert
+
 } from "react-bootstrap";
 
 class SignIn extends Component {
     constructor(props) {
-        super(props);
+        super(props)
+
         this.state = {
             form: {
                 email: "",
@@ -42,17 +45,17 @@ class SignIn extends Component {
             .then((res) => {
                 console.log("this is the response that eric is looking for", res);
 
-
                 const { errors } = res
 
                 if(errors) {
                     this.setState({
                         errors: errors.validations
                     })
-
-                    return
                 }
+
+
             })
+            .catch(e => console.log("error logging in:", e))
         } else {
             console.log("no onSubmit passed to Signin Component");
         }
@@ -65,8 +68,6 @@ class SignIn extends Component {
         if(errors) {
             const filtered = errors.filter(e => e.param === attribute)
 
-            console.log("filtered", filtered);
-
             if (filtered) {
                 errorString = filtered.map(e => e.param + " " + e.msg).join(", ")
             }
@@ -76,6 +77,10 @@ class SignIn extends Component {
 
         return errorString === undefined ? undefined : errorString
     }
+    consolelogger(){
+        return console.log("button button");
+    }
+
     render() {
         const { form, errors } = this.state
         const { email, password } = form
@@ -123,10 +128,9 @@ class SignIn extends Component {
                 <Row>
                     <Col xs={6}>
 
-                        <Button
-                            id="submit"
-                            onClick={this.handleSubmit.bind(this)}
-                        >Log In</Button>
+                        <Button id="submit" onClick={this.handleSubmit.bind(this)}>
+                            Log In
+                        </Button>
 
                     </Col>
                 </Row>
