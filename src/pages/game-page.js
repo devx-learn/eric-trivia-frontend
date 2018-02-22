@@ -131,17 +131,18 @@ class TriviaQuestions extends Component {
 
     let answers = currentQuestion.answers;
     const { score } = this.state
-    let questionBlock = <div >
-      <div > WaitinG for question </div>
-    </div >
+    let questionBlock =
+          <div>
+            <div> Waiting for other players </div>
+          </div>
 
 
     if (this.state.question.question && this.state.question.answers) {
       questionBlock =
 
-        <div >
+        <div>
           <h3 className="question" > Score: {score} </h3>
-          <p className={currentQuestion.category}>{currentQuestion.category} </p >
+          <p className="category" > {currentQuestion.category} </p>
           <p className="question" > {decodeEntities(currentQuestion.question)} </p>
           {answers.map((a) => {
             return <Button key={a}
@@ -153,26 +154,31 @@ class TriviaQuestions extends Component {
     } else if (this.state.answerStatus === 'right') {
       questionBlock =
         <div>
-          <p> Youre right!! </p>
+        <img id="background" src={categoryImage} alt="category"/>
+          <h3 className="question" > Score: {score} </h3>
+          <p className="category" > {currentQuestion.category} </p >
+          <p className="question" > Your Right!! </p>
         </div >
     } else
       if (this.state.answerStatus === 'wrong') {
         questionBlock =
           <div>
-            <p> Sorry, the correct answer is "{this.state.correctAnswer}" </p>
+          <img id="background" src={categoryImage} alt="category"/>
+          <h3 className="question" > Score: {score} </h3>
+          <p className="category"> {currentQuestion.category} </p>
+          <p className="question" > Sorry the correct answer is "{this.state.correctAnswer}" </p>
           </div >
       } else if (this.state.timeout) {
         questionBlock =
-          <div >
-            <p> Sorry, time is up.</p>
+          <div>
+            <p> Sorry, time is up. </p>
           </div>
       }
     return (<div>
       <div className='scoreBoard'>{this.renderPlayerList()}</div>
-      <img id="background"
-        src={categoryImage}
-        alt="category" />
-      <h1 > Welcome to Trivia! </h1> {questionBlock} </div >
+      <img id="background" src={categoryImage} alt="category"/>
+         {questionBlock}
+      </div >
     )
   }
 }

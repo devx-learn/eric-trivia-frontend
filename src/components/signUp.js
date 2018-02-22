@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import {
     Col,
     ControlLabel,
@@ -43,7 +44,6 @@ class SignUp extends Component {
             onSubmit(form)
             .then((res) => {
                 console.log("this is the response that eric is looking for", res);
-                // Join the websocket
 
                 const { errors } = res
 
